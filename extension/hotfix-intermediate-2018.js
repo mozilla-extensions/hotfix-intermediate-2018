@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "skeleton" }]*/
 /* eslint-disable no console */
 /* global ExtensionAPI */
 
@@ -6,7 +5,7 @@ const PREF_LAST_SIGNATURE_CHECKPOINT = "extensions.signatureCheckpoint";
 
 this.hotfixIntermediateCert = class extends ExtensionAPI {
   onStartup() {
-    if (Services.prefs.getIntPref(PREF_LAST_SIGNATURE_CHECKPOINT, 0) > 0) {
+    if (Services.prefs.prefHasUserValue(PREF_LAST_SIGNATURE_CHECKPOINT)) {
       // Return earlier if the hotfix has been already applied, or the
       // profile is running on a Firefox version that has already for a fix.
       return;
@@ -75,7 +74,7 @@ this.hotfixIntermediateCert = class extends ExtensionAPI {
       // e.g. in the remote chance this may manage to race with the pref being
       // set by the XPIProvider on builds that already got the fixed intermediate
       // certificate).
-      if (Services.prefs.getIntPref(PREF_LAST_SIGNATURE_CHECKPOINT, 0) === 0) {
+      if (!Services.prefs.prefHasUserValue(PREF_LAST_SIGNATURE_CHECKPOINT)) {
         Services.prefs.setIntPref(PREF_LAST_SIGNATURE_CHECKPOINT, 1);
       }
       console.log("signatures re-verified");
