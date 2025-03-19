@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "hotfix-intermediate-2018",
+  "version": "1.0.0",
+  "description": "Hotfix for https://bugzilla.mozilla.org/show_bug.cgi?id=1954818",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "hotfix-intermediate-2018@mozilla.com"
+    }
+  }
+}

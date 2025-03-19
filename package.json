@@ -1,0 +1,12 @@
+{
+  "name": "hotfix-intermediate-2018",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "web-ext build -s extension --overwrite-dest --filename hotfix-intermediate-2018.xpi",
+    "lint": "web-ext lint -s extension --privileged"
+  },
+  "devDependencies": {
+    "web-ext": "8.5.0"
+  }
+}
