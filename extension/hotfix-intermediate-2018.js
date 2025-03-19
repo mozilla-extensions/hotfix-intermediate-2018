@@ -2,12 +2,13 @@
 /* eslint-disable no console */
 /* global ExtensionAPI */
 
-const PREF_HOTFIX_DONE = "extensions.hotfix-intermediate-2018.done";
+const PREF_LAST_SIGNATURE_CHECKPOINT = "extensions.signatureCheckpoint";
 
 this.hotfixIntermediateCert = class extends ExtensionAPI {
   onStartup() {
-    if (Services.prefs.getBoolPref(PREF_HOTFIX_DONE, false)) {
-      // Return earlier if the hotfix has been already applied.
+    if (Services.prefs.getIntPref(PREF_LAST_SIGNATURE_CHECKPOINT, 0) > 0) {
+      // Return earlier if the hotfix has been already applied, or the
+      // profile is running on a Firefox version that has already for a fix.
       return;
     }
     this.applyHotFix();
@@ -69,7 +70,14 @@ this.hotfixIntermediateCert = class extends ExtensionAPI {
     // Finally, force a re-verification of signatures.
     try {
       await XPIDatabase.verifySignatures();
-      Services.prefs.setBoolPref(PREF_HOTFIX_DONE, true);
+
+      // Set the signature checkpoint to 1 (unless it is already not unset anymore,
+      // e.g. in the remote chance this may manage to race with the pref being
+      // set by the XPIProvider on builds that already got the fixed intermediate
+      // certificate).
+      if (Services.prefs.getIntPref(PREF_LAST_SIGNATURE_CHECKPOINT, 0) === 0) {
+        Services.prefs.setIntPref(PREF_LAST_SIGNATURE_CHECKPOINT, 1);
+      }
       console.log("signatures re-verified");
     } catch (e) {
       console.error("failed to re-verify signatures:", e);
