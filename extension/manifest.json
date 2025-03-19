@@ -7,5 +7,16 @@
     "gecko": {
       "id": "hotfix-intermediate-2018@mozilla.com"
     }
+  },
+  "experiment_apis": {
+    "hotfixIntermediateCert": {
+      "parent": {
+        "paths": [["hotfixIntermediateCert"]],
+        "scopes": ["addon_parent"],
+        "script": "api.js",
+        "events": ["startup"]
+      },
+      "schema": "schema.json"
+    }
   }
 }
