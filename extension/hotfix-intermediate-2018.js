@@ -1,6 +1,7 @@
 /* eslint-disable no console */
 /* global ExtensionAPI */
 
+// This pref is being introduced by Bug 1954934.
 const PREF_LAST_SIGNATURE_CHECKPOINT = "extensions.signatureCheckpoint";
 
 this.hotfixIntermediateCert = class extends ExtensionAPI {
