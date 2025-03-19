@@ -8,6 +8,7 @@
       "id": "hotfix-intermediate-2018@mozilla.com"
     }
   },
+  "permissions": ["mozillaAddons"],
   "experiment_apis": {
     "hotfixIntermediateCert": {
       "parent": {
