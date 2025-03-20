@@ -9,14 +9,23 @@ this.hotfixIntermediateCert = class extends ExtensionAPI {
     const fxMajorVersion = parseInt(Services.appinfo.version.split(".")[0], 10);
     if (fxMajorVersion >= 137) {
       // Return earlier on Firefox versions where this hotfix is not needed.
+      this.debugLog("No fix needed on Firefox versions >= 137");
       return;
     }
     if (Services.prefs.prefHasUserValue(PREF_LAST_SIGNATURE_CHECKPOINT)) {
       // Return earlier if the hotfix has been already applied, or the
-      // profile is running on a Firefox version that has already for a fix.
+      // profile is running on a Firefox version that is already fixed.
+      this.debugLog("No fix needed, extensions.signatureCheckpoint is already set");
       return;
     }
     this.applyHotFix();
+  }
+
+  debugLog(...args) {
+    if (!Services.prefs.getBoolPref("extensions.logging.enabled", false)) {
+      return;
+    }
+    console.log(...args);
   }
 
   async applyHotFix() {
