@@ -6,6 +6,11 @@ const PREF_LAST_SIGNATURE_CHECKPOINT = "extensions.signatureCheckpoint";
 
 this.hotfixIntermediateCert = class extends ExtensionAPI {
   onStartup() {
+    const fxMajorVersion = parseInt(Services.appinfo.version.split(".")[0], 10);
+    if (fxMajorVersion >= 137) {
+      // Return earlier on Firefox versions where this hotfix is not needed.
+      return;
+    }
     if (Services.prefs.prefHasUserValue(PREF_LAST_SIGNATURE_CHECKPOINT)) {
       // Return earlier if the hotfix has been already applied, or the
       // profile is running on a Firefox version that has already for a fix.
