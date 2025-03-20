@@ -19,9 +19,14 @@ this.hotfixIntermediateCert = class extends ExtensionAPI {
 
     try {
       XPIDatabase = ChromeUtils.importESModule("resource://gre/modules/addons/XPIDatabase.sys.mjs").XPIDatabase;
-    } catch (err) {
-      console.warn("Unable to load XPIDatabase.sys.mjs", err);
-      return;
+    } catch (errESM) {
+      // Fallback to XPIDatabase.jsm if XPIDatabase.sys.mjs couldn't be loaded (required for Firefox 115 ESR).
+      try {
+        XPIDatabase = ChromeUtils.import("resource://gre/modules/addons/XPIDatabase.jsm").XPIDatabase;
+      } catch (errJSM) {
+        console.warn("Unable to load XPIDatabase module - ESM failure:", errESM, ", JSM failure:", errJSM);
+        return;
+      }
     }
 
     // Inject the new cert.
