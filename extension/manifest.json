@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Re-enable add-ons signed before Feb. 2018 (Bug 1954818)",
+  "name": "Fix add-ons signed before 2018 (Bug 1954818)",
   "version": "1.0.0",
   "description": "Hotfix for https://bugzilla.mozilla.org/show_bug.cgi?id=1954818",
   "browser_specific_settings": {
