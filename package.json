@@ -7,6 +7,6 @@
     "lint": "web-ext lint -s extension --privileged"
   },
   "devDependencies": {
-    "web-ext": "8.5.0"
+    "web-ext": "8.10.0"
   }
 }
